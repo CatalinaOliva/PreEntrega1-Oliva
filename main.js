@@ -1,7 +1,18 @@
 let nombre = prompt("Ingrese su Nombre");
+
+// function datos (x, ) {
+//     while (x === "string") {
+//         alert(`${x} No es un nombre valido!`);
+//         nombre = prompt("Ingrese su Nombre");
+//     }
+// }
+
+// datos (nombre)
+
 let apellido = prompt("Ingrese su Apellido");
 let materia = prompt("Ingrese el nombre de la Materia");
 let primerParcial = parseFloat(prompt("Ingrese la nota de su primer Parcial"));
+
 
 function notas(x, a) {
     while (x > 10 | x < 1 | isNaN(x)) {
@@ -11,6 +22,7 @@ function notas(x, a) {
 }
 
 notas (primerParcial, "primer");
+
 
 // while (primerParcial > 10 | primerParcial < 1 | isNaN(primerParcial)) {
 //     alert("El valor ingresado debe ser del 1 al 10.");
