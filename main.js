@@ -4,6 +4,18 @@ let nombre = prompt("Ingrese su Nombre");
 let apellido = prompt("Ingrese su Apellido");
 let materia = prompt("Ingrese el nombre de la Materia");
 
+function validarNota(numParcial) {
+    let nota;
+    do {
+        nota = parseFloat(prompt(`Ingrese la nota de su ${numParcial} parcial`));
+        if (isNaN(nota) || nota < 1 || nota > MAX_NOTA) {
+            alert(`La nota ingresada debe ser un número entre 1 y ${MAX_NOTA}`);
+        }
+    } while (isNaN(nota) || nota < 1 || nota > MAX_NOTA);
+    return nota;
+}
+
+
 let primerParcial = validarNota("primer");
 let segundoParcial = validarNota("segundo");
 let tercerParcial = validarNota("tercer");
@@ -20,13 +32,3 @@ if (sumas < 30 && sumas > 24) {
     alert(`Hola, ${nombre} ${apellido}, tu promedio general actual en ${materia} es de ${resultados}. Lamentablemente, estás desaprobado :(`);
 }
 
-function validarNota(numParcial) {
-    let nota;
-    do {
-        nota = parseFloat(prompt(`Ingrese la nota de su ${numParcial} parcial`));
-        if (isNaN(nota) || nota < 1 || nota > MAX_NOTA) {
-            alert(`La nota ingresada debe ser un número entre 1 y ${MAX_NOTA}`);
-        }
-    } while (isNaN(nota) || nota < 1 || nota > MAX_NOTA);
-    return nota;
-}
