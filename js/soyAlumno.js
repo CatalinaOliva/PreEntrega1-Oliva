@@ -1,6 +1,5 @@
-// Obtener referencia al botón de búsqueda y al contenedor de resultados
+// Obtener referencia al botón de búsqueda
 const buscarBtn = document.getElementById('buscarBtn');
-const resultContainer = document.getElementById('resultContainer');
 
 // Añadir evento click al botón de búsqueda
 buscarBtn.addEventListener('click', function (event) {
@@ -11,8 +10,8 @@ buscarBtn.addEventListener('click', function (event) {
   const apellidoAlumno = document.getElementById('apellidoAlumno').value.trim();
   const materiaAlumno = document.getElementById('materiaAlumno').value.trim();
 
-  // Obtener datos de estudiantes desde el sessionStorage
-  const estudiantesJSON = sessionStorage.getItem('estudiantes');
+  // Obtener datos de estudiantes desde el localStorage
+  const estudiantesJSON = localStorage.getItem('estudiantes');
   if (estudiantesJSON) {
     const estudiantes = JSON.parse(estudiantesJSON);
 
@@ -21,31 +20,26 @@ buscarBtn.addEventListener('click', function (event) {
       e.apellido.toLowerCase() === apellidoAlumno.toLowerCase() &&
       e.materia.toLowerCase() === materiaAlumno.toLowerCase());
 
-    // Limpiar el contenedor de resultados
-    resultContainer.innerHTML = '';
-
     if (alumno) {
-      // Mostrar las notas y promedio del alumno encontrado
-      const notasElemento = document.createElement('div');
-      notasElemento.innerHTML = `
-        <h3>Notas del Alumno</h3>
-        <p>Apellido: ${alumno.apellido}</p>
-        <p>Materia: ${alumno.materia}</p>
-        <p>Notas: ${alumno.notas.join(', ')}</p>
-        <p>Promedio: ${calcularPromedio(alumno.notas)}</p>
-      `;
-      resultContainer.appendChild(notasElemento);
+      // Mostrar las notas y promedio del alumno encontrado utilizando Sweet Alerts
+      Swal.fire({
+        title: 'Notas del Alumno',
+        html: `
+          <p>Apellido: ${alumno.apellido}</p>
+          <p>Materia: ${alumno.materia}</p>
+          <p>Notas: ${alumno.notas.join(', ')}</p>
+          <p>Promedio: ${calcularPromedio(alumno.notas)}</p>
+        `,
+        icon: 'info',
+        confirmButtonText: 'Cerrar'
+      });
     } else {
-      // Mostrar un mensaje si el alumno no fue encontrado
-      const mensajeElemento = document.createElement('p');
-      mensajeElemento.textContent = 'Alumno no encontrado';
-      resultContainer.appendChild(mensajeElemento);
+      // Mostrar un mensaje si el alumno no fue encontrado utilizando Sweet Alerts
+      Swal.fire('Error', 'Alumno no encontrado', 'error');
     }
   } else {
-    // Mostrar un mensaje si no hay datos de estudiantes almacenados
-    const mensajeElemento = document.createElement('p');
-    mensajeElemento.textContent = 'No hay datos de estudiantes almacenados';
-    resultContainer.appendChild(mensajeElemento);
+    // Mostrar un mensaje si no hay datos de estudiantes almacenados utilizando Sweet Alerts
+    Swal.fire('Error', 'No hay datos de estudiantes almacenados', 'error');
   }
 });
 
