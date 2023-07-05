@@ -1,3 +1,4 @@
+// Clase Estudiante
 class Estudiante {
   constructor(nombre, apellido, materia) {
     this.nombre = nombre;
@@ -20,7 +21,6 @@ const formulario = document.getElementById('formulario');
 // Añadir evento submit al formulario
 formulario.addEventListener('submit', function (event) {
   event.preventDefault(); // Evitar el envío del formulario
-  registrarCalificaciones();
 
   // Obtener valores del formulario
   const nombre = document.getElementById('nombre').value;
@@ -29,12 +29,6 @@ formulario.addEventListener('submit', function (event) {
   const nota1 = parseFloat(document.getElementById('nota1').value);
   const nota2 = parseFloat(document.getElementById('nota2').value);
   const nota3 = parseFloat(document.getElementById('nota3').value);
-
-  // Validar campos obligatorios
-  if (nombre === '' || apellido === '' || materia === '' || isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
-    mostrarMensajeError('Ingrese todos los campos y notas válidas');
-    return;
-  }
 
   // Validar notas entre 1 y 10
   if (isNaN(nota1) || nota1 < 1 || nota1 > 10 ||
@@ -64,6 +58,39 @@ formulario.addEventListener('submit', function (event) {
   guardarEstudiantesEnLocalStorage();
 });
 
+// Obtener datos de estudiantes desde el archivo JSON
+function obtenerEstudiantesDesdeJSON() {
+  fetch('estudiantes.json')
+    .then(response => response.json())
+    .then(data => {
+      estudiantes = data; // Actualizar el array estudiantes con los datos del archivo JSON
+    })
+    .catch(error => {
+      console.error('Error al cargar los datos de estudiantes:', error);
+    });
+}
+
+// Guardar datos de estudiantes en el archivo JSON
+function guardarEstudiantesEnJSON() {
+  fetch('estudiantes.json', {
+    method: 'PUT', // Utiliza el método PUT para actualizar el archivo JSON
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(estudiantes) // Convierte el array estudiantes a formato JSON
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Datos de estudiantes guardados exitosamente');
+      } else {
+        throw new Error('Error al guardar los datos de estudiantes');
+      }
+    })
+    .catch(error => {
+      console.error('Error al guardar los datos de estudiantes:', error);
+    });
+}
+
 // Función para mostrar un mensaje de éxito con Sweet Alerts
 function mostrarMensajeExito(mensaje) {
   Swal.fire('Éxito', mensaje, 'success');
@@ -72,11 +99,6 @@ function mostrarMensajeExito(mensaje) {
 // Función para mostrar un mensaje de error con Sweet Alerts
 function mostrarMensajeError(mensaje) {
   Swal.fire('Error', mensaje, 'error');
-}
-
-// Función para mostrar un mensaje de información con Sweet Alerts
-function mostrarMensajeInformacion(mensaje) {
-  Swal.fire('Información', mensaje, 'info');
 }
 
 // Función para calcular el promedio de un array de notas (redondeado a 2 decimales)
@@ -308,3 +330,9 @@ function agregarNota() {
     }
   });
 }
+
+// Cargar los datos de los estudiantes desde el archivo JSON cuando la página se carga
+window.addEventListener('DOMContentLoaded', function () {
+  obtenerEstudiantesDesdeJSON();
+  guardarEstudiantesEnJSON();
+});
