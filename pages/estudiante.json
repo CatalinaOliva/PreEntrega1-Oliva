@@ -1,0 +1,21 @@
+[
+    {
+      "nombre": "Juan",
+      "apellido": "Pérez",
+      "materia": "Matemáticas",
+      "notas": [8, 7, 9]
+    },
+    {
+      "nombre": "María",
+      "apellido": "González",
+      "materia": "Historia",
+      "notas": [6, 8, 7]
+    },
+    {
+      "nombre": "Pedro",
+      "apellido": "López",
+      "materia": "Ciencias",
+      "notas": [9, 9, 10]
+    }
+  ]
+  
